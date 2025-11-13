@@ -31,14 +31,14 @@ export function GoogleDrivePicker({ onImagesSelected, selectedImages = [] }: Goo
   const { toast } = useToast();
 
   // You'll need to set these in your environment or configuration
-  const CLIENT_ID = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_GOOGLE_CLIENT_ID : '';
-  const API_KEY = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_GOOGLE_API_KEY : '';
-  const APP_ID = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_GOOGLE_APP_ID : '';
+  const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+  const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || '';
+  const APP_ID = import.meta.env.VITE_GOOGLE_APP_ID || '';
   
   const SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
 
   // Check if credentials are configured
-  const isConfigured = CLIENT_ID && API_KEY && APP_ID;
+  const isConfigured = CLIENT_ID && API_KEY && APP_ID && CLIENT_ID !== 'your-google-client-id-here';
 
   useEffect(() => {
     if (!isConfigured) {
@@ -90,6 +90,10 @@ export function GoogleDrivePicker({ onImagesSelected, selectedImages = [] }: Goo
         scope: SCOPES,
         callback: async (response: any) => {
           if (response.error !== undefined) {
+            if (response.error === 'popup_closed_by_user') {
+              // User closed the popup, just return
+              return;
+            }
             throw response;
           }
           setIsAuthorized(true);
@@ -97,7 +101,13 @@ export function GoogleDrivePicker({ onImagesSelected, selectedImages = [] }: Goo
         },
       });
 
-      tokenClient.requestAccessToken({ prompt: 'consent' });
+      // If already authorized, try to get a new token without forcing account selection
+      if (isAuthorized) {
+        tokenClient.requestAccessToken({ prompt: '' });
+      } else {
+        // For first-time authorization, show account selection
+        tokenClient.requestAccessToken({ prompt: 'select_account' });
+      }
     } catch (error) {
       console.error('Error during authorization:', error);
       toast({
