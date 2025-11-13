@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { services } from '../data/services';
@@ -10,6 +11,10 @@ export function Home() {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Print Services Website - Professional Printing Solutions</title>
+        <meta name="description" content="High-quality printing services for businesses and individuals. From business cards to large format printing, we offer professional solutions for all your printing needs." />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">

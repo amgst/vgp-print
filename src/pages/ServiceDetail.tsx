@@ -1,4 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { services } from '../data/services';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -48,6 +49,10 @@ export function ServiceDetail() {
 
   return (
     <div className="min-h-screen py-16">
+      <Helmet>
+        <title>{service.name} - Printing Services | PrintPro</title>
+        <meta name="description" content={`${service.detailedDescription.substring(0, 150)}... Professional printing services for all your ${service.name.toLowerCase()} needs.`} />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <Button variant="ghost" asChild className="mb-8">

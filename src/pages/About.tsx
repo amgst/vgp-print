@@ -1,10 +1,15 @@
 import { Card, CardContent } from '../components/ui/card';
+import { Helmet } from 'react-helmet-async';
 import { Users, Target, Award, Heart } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 export function About() {
   return (
     <div className="min-h-screen py-16">
+      <Helmet>
+        <title>About PrintPro Services - Professional Printing Company</title>
+        <meta name="description" content="Learn about PrintPro Services, your trusted partner in professional printing solutions since 2010. Discover our story, values, and commitment to quality printing services." />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="text-center mb-16">

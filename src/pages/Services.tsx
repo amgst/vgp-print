@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { services } from '../data/services';
@@ -28,6 +29,10 @@ const imageMap: Record<string, string> = {
 export function Services() {
   return (
     <div className="min-h-screen py-16">
+      <Helmet>
+        <title>Our Printing Services - PrintPro Services</title>
+        <meta name="description" content="Explore our comprehensive printing services including business cards, brochures, banners, posters, and custom printing solutions for all your needs." />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
